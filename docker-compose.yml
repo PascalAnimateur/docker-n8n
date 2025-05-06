@@ -1,0 +1,22 @@
+services:
+
+  n8n:
+    image: docker.n8n.io/n8nio/n8n
+    restart: always
+    container_name: n8n
+    hostname: n8n
+    environment:
+      - N8N_HOST=${N8N_HOST}
+      - N8N_PORT=5678
+      - N8N_PROTOCOL=https
+      - NODE_ENV=production
+      - WEBHOOK_URL=https://${N8N_HOST}/
+      - GENERIC_TIMEZONE=${GENERIC_TIMEZONE}
+    volumes:
+      - ${DATA-./data}/n8n/data:/home/node/.n8n
+      - ${DATA-./data}/n8n/files:/files
+
+networks:
+  default:
+    name: proxy
+    external: true
