@@ -4,7 +4,7 @@ USER root
 
 # Install GDAL
 RUN apk add --no-cache \
-    gdal \
+    gdal-tools \
     gdal-dev \
     py3-gdal
 
