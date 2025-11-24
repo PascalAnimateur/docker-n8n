@@ -6,6 +6,7 @@ USER root
 RUN apk add --no-cache \
     gdal-tools \
     gdal-dev \
+    ghostscript imagemagick \
     py3-gdal
 
 USER node
