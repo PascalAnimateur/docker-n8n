@@ -4,9 +4,12 @@ USER root
 
 # Install GDAL
 RUN apk add --no-cache \
+    gdal \
     gdal-tools \
     gdal-dev \
-    ghostscript imagemagick \
+    ghostscript \
+    imagemagick \
+    libpq \
     py3-gdal
 
 USER node
