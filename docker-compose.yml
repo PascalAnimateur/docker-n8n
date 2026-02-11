@@ -2,27 +2,32 @@ services:
 
   n8n:
     build: .
-    restart: always
+    restart: unless-stopped
     container_name: n8n
     hostname: n8n
     environment:
+      # Core
       - N8N_HOST=${N8N_HOST}
       - N8N_PORT=5678
       - N8N_PROTOCOL=https
-      - N8N_ENFORCE_SETTINGS_FILE_PERMISSIONS=true
-      - N8N_ENCRYPTION_KEY=${N8N_ENCRYPTION_KEY}
-      - N8N_RUNNERS_ENABLED=true
-      - N8N_RUNNERS_MODE=internal
-      - N8N_RUNNERS_AUTH_TOKEN=${N8N_RUNNERS_AUTH_TOKEN}
+      - N8N_TRUST_PROXY=true
+      - GENERIC_TIMEZONE=${GENERIC_TIMEZONE}
+      - TZ=${GENERIC_TIMEZONE}
       - NODE_ENV=production
       - WEBHOOK_URL=https://${N8N_HOST}/
-      - GENERIC_TIMEZONE=${GENERIC_TIMEZONE}
+
+      # Security
+      - N8N_ENCRYPTION_KEY=${N8N_ENCRYPTION_KEY}
+      - N8N_ENFORCE_SETTINGS_FILE_PERMISSIONS=true
+
+      # Database
       - DB_TYPE=postgresdb
-      - DB_POSTGRESDB_DATABASE=${DB_POSTGRESDB_DATABASE-n8n}
       - DB_POSTGRESDB_HOST=${DB_POSTGRESDB_HOST-postgres}
       - DB_POSTGRESDB_PORT=5432
+      - DB_POSTGRESDB_DATABASE=${DB_POSTGRESDB_DATABASE-n8n}
       - DB_POSTGRESDB_USER=${DB_POSTGRESDB_USER}
       - DB_POSTGRESDB_PASSWORD=${DB_POSTGRESDB_PASSWORD}
+      
     volumes:
       - ${DOCKER_DATA-./data}/n8n/data:/home/node/.n8n
       - ${DOCKER_DATA-./data}/n8n/files:/files
