@@ -19,6 +19,7 @@ services:
       # Security
       - N8N_ENCRYPTION_KEY=${N8N_ENCRYPTION_KEY}
       - N8N_ENFORCE_SETTINGS_FILE_PERMISSIONS=true
+      - NODES_EXCLUDE="[]"
 
       # Database
       - DB_TYPE=postgresdb
